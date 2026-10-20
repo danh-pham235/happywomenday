@@ -11,16 +11,20 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Segoe UI;
+font-family:Segoe UI, sans-serif;
 }
 
+html{overflow-x:clip;}
+
 body{
-height:100vh;
-overflow:hidden;
+min-height:100vh;
+min-height:100svh;
+overflow-x:clip;
 background:#0b0c2a;
 display:flex;
 align-items:center;
 justify-content:center;
+padding:24px 16px;
 color:white;
 }
 
@@ -28,12 +32,11 @@ color:white;
 
 .parallax{
 position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
+inset:0;
 z-index:-2;
 pointer-events:none;
+overflow:hidden;
+background-color:#0b0c2a;
 }
 
 .parallax .layer{
@@ -43,98 +46,98 @@ height:200%;
 background-repeat:repeat;
 animation:moveStars linear infinite;
 }
+.layer1{background-image:radial-gradient(2px 2px white,transparent);background-size:120px 120px;animation-duration:120s;opacity:.3}
+.layer2{background-image:radial-gradient(2px 2px #fff,transparent);background-size:80px 80px;animation-duration:80s;opacity:.5}
+.layer3{background-image:radial-gradient(3px 3px #fff,transparent);background-size:40px 40px;animation-duration:40s;opacity:.9}
+.parallax .layer.layer1{background-image:radial-gradient(circle 1px at center,white 98%,transparent);background-size:120px 120px;animation:moveStars 120s linear infinite;opacity:.3}
+.parallax .layer.layer2{background-image:radial-gradient(circle 1px at center,#fff 98%,transparent);background-size:80px 80px;animation:moveStars 80s linear infinite;opacity:.5}
+.parallax .layer.layer3{background-image:radial-gradient(circle 1.5px at center,#fff 98%,transparent);background-size:40px 40px;animation:moveStars 40s linear infinite;opacity:.9}
+@keyframes moveStars{from{transform:translate(0,0)}to{transform:translate(-500px,-500px)}}
 
-.layer1{
-background-image:radial-gradient(2px 2px white, transparent);
-background-size:120px 120px;
-animation-duration:120s;
-opacity:0.3;
-}
-
-.layer2{
-background-image:radial-gradient(2px 2px #fff, transparent);
-background-size:80px 80px;
-animation-duration:80s;
-opacity:0.5;
-}
-
-.layer3{
-background-image:radial-gradient(3px 3px #fff, transparent);
-background-size:40px 40px;
-animation-duration:40s;
-opacity:0.9;
-}
-
-@keyframes moveStars{
-from{transform:translate(0,0)}
-to{transform:translate(-500px,-500px)}
-}
-
-/* CHERRY TREE */
-
-.tree{
-position:fixed;
-left:-80px;
-bottom:-50px;
-font-size:260px;
-z-index:0;
-filter:drop-shadow(0 0 20px pink);
-}
-
-/* SWINGING BRANCH (NEW) */
-
-.branch{
-position:fixed;
-top:-40px;
-right:-40px;
-font-size:140px;
-transform-origin:top center;
-animation:swing 6s ease-in-out infinite;
-}
-
-@keyframes swing{
-0%{transform:rotate(-5deg)}
-50%{transform:rotate(5deg)}
-100%{transform:rotate(-5deg)}
-}
-
-/* STAR SKY */
-
-.stars{
-position:fixed;
-width:100%;
-height:100%;
-}
-
+.star-field{position:absolute;inset:0;}
 .star{
 position:absolute;
 width:2px;
 height:2px;
-background:white;
+border-radius:50%;
+background:#fff;
 animation:twinkle 3s infinite alternate;
 }
+@keyframes twinkle{from{opacity:.2}to{opacity:1}}
 
-@keyframes twinkle{
-from{opacity:0.2}
-to{opacity:1}
+.shooting-star{position:fixed;width:2px;height:80px;z-index:1;pointer-events:none;background:linear-gradient(white,transparent);transform:rotate(45deg);animation:shoot 3s linear forwards;opacity:.8}
+@keyframes shoot{0%{transform:translateX(-200px) translateY(-200px) rotate(45deg)}100%{transform:translateX(100vw) translateY(100vh) rotate(45deg)}}
+
+/* A pair of CSS blossoms adds detail without extra image requests. */
+
+.corner-sprig{
+position:fixed;
+width:clamp(155px, 20vw, 260px);
+height:clamp(155px, 20vw, 260px);
+z-index:1;
+pointer-events:none;
+filter:drop-shadow(0 0 12px rgba(255, 160, 210, 0.32));
 }
 
-/* SHOOTING STAR */
-
-.shooting-star{
+.corner-sprig::before,
+.corner-sprig::after{
+content:"";
 position:absolute;
-width:2px;
-height:80px;
-background:linear-gradient(white,transparent);
-transform:rotate(45deg);
-animation:shoot 3s linear infinite;
-opacity:0.8;
+width:38%;
+height:38%;
+border-radius:50%;
+background:
+radial-gradient(ellipse at 50% 5%, #b8fff0 0 18%, transparent 20%),
+radial-gradient(ellipse at 95% 38%, #8debdc 0 18%, transparent 20%),
+radial-gradient(ellipse at 80% 95%, #b8fff0 0 18%, transparent 20%),
+radial-gradient(ellipse at 20% 95%, #8debdc 0 18%, transparent 20%),
+radial-gradient(ellipse at 5% 38%, #b8fff0 0 18%, transparent 20%);
 }
 
-@keyframes shoot{
-0%{transform:translateX(-200px) translateY(-200px) rotate(45deg);}
-100%{transform:translateX(100vw) translateY(100vh) rotate(45deg);}
+.corner-sprig::after{
+width:7%;
+height:7%;
+left:15.5%;
+top:15.5%;
+background:#ffe39a;
+box-shadow:0 0 8px #ffe39a;
 }
+
+.corner-sprig span{
+position:absolute;
+width:30%;
+height:12%;
+border-radius:100% 0 100% 0;
+background:linear-gradient(135deg, #b6f1bb, #4dba91);
+}
+
+.corner-sprig span:first-child{left:27%;top:42%;transform:rotate(-35deg)}
+.corner-sprig span:last-child{left:5%;top:55%;transform:rotate(25deg)}
+.sprig-top-left{top:8px;left:8px;transform:none}
+.sprig-top-right{top:8px;right:8px;transform:none}
+.sprig-bottom-left{bottom:8px;left:8px;transform:none}
+.sprig-bottom-right{right:8px;bottom:8px;transform:none}
+.corner-sprig.has-image::before,
+.corner-sprig.has-image::after,
+.corner-sprig.has-image span{display:none}
+.corner-sprig img{
+position:absolute;
+inset:0;
+width:100%;
+height:100%;
+object-fit:contain;
+}
+
+.falling-petal{position:absolute;top:-10px;font-size:20px;animation:petal-fall linear infinite;pointer-events:none}
+@keyframes petal-fall{to{transform:translateY(110vh) rotate(360deg)}}
+.floating-heart{position:absolute;color:#ff5cb8;font-size:20px;animation:heart-rise 5s linear forwards;pointer-events:none}
+@keyframes heart-rise{to{transform:translateY(-100vh);opacity:0}}
+.sparkle{position:absolute;color:#fff;font-size:14px;animation:sparkle-pop 2s infinite;pointer-events:none}
+@keyframes sparkle-pop{0%{opacity:0;transform:scale(0)}50%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(0)}}
+.burst{position:absolute;font-size:18px;color:#fff;animation:burst-pop 1s forwards;pointer-events:none}
+@keyframes burst-pop{0%{transform:scale(0);opacity:1}100%{transform:translate(var(--x),var(--y)) scale(1.5);opacity:0}}
+.fly-letter{position:absolute;font-size:20px;animation:letter-fly 2s forwards;pointer-events:none}
+@keyframes letter-fly{0%{transform:translateY(0) scale(.5);opacity:1}100%{transform:translateY(-200px) rotate(360deg);opacity:0}}
 
 /* MAIN */
 
@@ -143,14 +146,15 @@ z-index:10;
 display:flex;
 flex-direction:column;
 align-items:center;
-gap:25px;
+gap:clamp(14px, 3vh, 25px);
 text-align:center;
+width:min(100%, 420px);
 }
 
 /* NAME */
 
 .name{
-font-size:42px;
+font-size:clamp(27px, 5vw, 42px);
 font-weight:bold;
 color:#ff7ac3;
 text-shadow:
@@ -187,8 +191,10 @@ pointer-events:none;
 /* PHOTO */
 
 .photo{
-width:300px;
-height:300px;
+width:clamp(190px, 38vh, 300px);
+height:clamp(190px, 38vh, 300px);
+max-width:80vw;
+max-height:80vw;
 border-radius:50%;
 overflow:hidden;
 border:8px solid #ff7ac3;
@@ -235,26 +241,12 @@ from{transform:rotate(0)}
 to{transform:rotate(360deg)}
 }
 
-/* SPARKLES */
-
-.sparkle{
-position:absolute;
-color:#fff;
-font-size:14px;
-animation:sparkle 2s infinite;
-}
-
-@keyframes sparkle{
-0%{opacity:0; transform:scale(0);}
-50%{opacity:1; transform:scale(1);}
-100%{opacity:0; transform:scale(0);}
-}
-
 /* ENVELOPE 3D */
 
 .envelope{
-width:260px;
-height:160px;
+width:min(260px, 78vw);
+height:clamp(130px, 21vh, 160px);
+flex:none;
 background:#ff6fb5;
 border-radius:10px;
 position:relative;
@@ -264,6 +256,9 @@ display:flex;
 align-items:center;
 justify-content:center;
 margin-top:20px;
+border:0;
+color:inherit;
+font:inherit;
 }
 
 .flap{
@@ -283,12 +278,43 @@ transform:rotateX(180deg);
 z-index: 0; /* Khi mở thì nắp nằm dưới thư */
 }
 
+.envelope-hint{
+position:absolute;
+left:50%;
+bottom:18px;
+z-index:3;
+transform:translateX(-50%);
+padding:7px 16px;
+border:1px solid rgba(255,255,255,.65);
+border-radius:999px;
+background:rgba(255,255,255,.2);
+color:#fff;
+font-size:14px;
+font-weight:700;
+text-shadow:0 1px 5px rgba(160,35,105,.55);
+box-shadow:0 2px 12px rgba(190,48,125,.2);
+white-space:nowrap;
+pointer-events:none;
+animation:hint-bob 1.8s ease-in-out infinite;
+transition:opacity .25s ease;
+}
+
+@keyframes hint-bob{
+0%,100%{transform:translate(-50%,0);box-shadow:0 2px 12px rgba(190,48,125,.2)}
+50%{transform:translate(-50%,-5px);box-shadow:0 5px 18px rgba(190,48,125,.42)}
+}
+
+.open .envelope-hint{
+opacity:0;
+animation:none;
+}
+
 /* LETTER - ĐÃ SỬA ĐỂ KHÔNG LÒI CHỮ */
 
 .letter{
 position:absolute;
 width:90%;
-max-height: 250px; /* Giới hạn chiều cao tối đa */
+max-height:min(250px, 38vh);
 background:white;
 color:#333;
 padding:15px;
@@ -296,83 +322,78 @@ border-radius:10px;
 transform:translateY(40px);
 opacity:0;
 transition:0.8s;
-overflow-y: auto; /* Tạo thanh cuộn nếu chữ quá dài */
-text-align: center; /* Căn giữa chữ */
+overflow-y:auto;
+text-align:center;
 font-size: 15px;
 line-height: 1.5;
 z-index: 1;
+overscroll-behavior:contain;
+scrollbar-width:thin;
+scrollbar-color:#ee78b5 #fff0f7;
 }
 
+.letter::-webkit-scrollbar{width:10px}
+.letter::-webkit-scrollbar-track{
+background:#fff0f7;
+border-radius:10px;
+}
+.letter::-webkit-scrollbar-thumb{
+background:linear-gradient(180deg,#ffacd8,#e85a9e);
+border:2px solid #fff0f7;
+border-radius:10px;
+}
+.letter::-webkit-scrollbar-thumb:hover{background:#d9448c}
+.letter::-webkit-scrollbar-button,
+.letter::-webkit-scrollbar-button:single-button,
+.letter::-webkit-scrollbar-button:vertical:decrement,
+.letter::-webkit-scrollbar-button:vertical:increment{
+display:none;
+width:0;
+height:0;
+background:transparent;
+border:0;
+}
+.letter::-webkit-scrollbar-corner{background:transparent}
+
 .open .letter{
-transform:translateY(-100px); /* Đẩy thư lên cao hơn khi mở */
+transform:translateY(-100px);
 opacity:1;
 }
 
-/* EXPLOSION LIGHT (NEW) */
+.envelope.open{animation:open-glow 700ms ease-out;}
 
-.burst{
-position:absolute;
-font-size:18px;
-color:#fff;
-animation:burst 1s forwards;
-}
-
-@keyframes burst{
-0%{transform:scale(0);opacity:1;}
-100%{transform:translate(var(--x),var(--y)) scale(1.5);opacity:0;}
-}
-
-/* SAKURA */
-
-.sakura{
-position:absolute;
-top:-10px;
-font-size:20px;
-animation:fall linear infinite;
-}
-
-@keyframes fall{
-to{transform:translateY(110vh) rotate(360deg);}
-}
-
-/* HEART FLOAT */
-
-.heart{
-position:absolute;
-color:#ff5cb8;
-font-size:20px;
-animation:float 5s linear forwards;
-}
-
-@keyframes float{
-to{transform:translateY(-100vh);opacity:0;}
-}
-
-/* FLYING LETTERS (NEW) */
-
-.flyLetter{
-position:absolute;
-font-size:20px;
-animation:flyLetter 2s forwards;
-}
-
-@keyframes flyLetter{
-0%{transform:translateY(0) scale(0.5);opacity:1;}
-100%{transform:translateY(-200px) rotate(360deg);opacity:0;}
+@keyframes open-glow{
+50%{box-shadow:0 0 28px rgba(255, 155, 208, 0.8);}
 }
 
 /* RESPONSIVE */
 
+@media (max-height:600px){
+body{padding-block:12px;}
+.container{gap:10px;}
+.photo{width:min(190px, 34vh);height:min(190px, 34vh);}
+.envelope{height:110px;margin-top:10px;}
+.flap{height:56px;top:-56px;}
+.letter{max-height:30vh;}
+.open .letter{transform:translateY(-72px);}
+.corner-sprig{width:clamp(125px, 19vw, 185px);height:clamp(125px, 19vw, 185px);}
+.sprig-top-left{top:24px;left:20px;}
+.sprig-top-right{top:24px;right:20px;}
+.sprig-bottom-left{bottom:24px;left:20px;}
+.sprig-bottom-right{right:20px;bottom:24px;}
+}
+
+@media (max-width:380px){
+.name{font-size:25px;}
+.letter{font-size:13px;padding:12px;}
+}
+
 @media (max-width:600px){
-
-.name{font-size:28px;}
-
-.photo{width:200px;height:200px;}
-
-.envelope{width:220px;height:140px;}
-
-.letter{font-size: 13px;}
-
+.corner-sprig{width:clamp(108px, 30vw, 150px);height:clamp(108px, 30vw, 150px);}
+.sprig-top-left{left:4px;top:4px;}
+.sprig-top-right{right:4px;top:4px;}
+.sprig-bottom-left{left:4px;bottom:4px;}
+.sprig-bottom-right{right:4px;bottom:4px;}
 }
 
 </style>
@@ -381,23 +402,32 @@ animation:flyLetter 2s forwards;
 <body>
 
 <div class="parallax">
+<div class="star-field" id="stars" aria-hidden="true"></div>
 <div class="layer layer1"></div>
 <div class="layer layer2"></div>
 <div class="layer layer3"></div>
 </div>
 
-<div class="tree">🌸</div>
-<div class="branch">🌸</div>
-
-<div class="stars" id="stars"></div>
+<div class="corner-sprig sprig-top-left" aria-hidden="true">
+<span></span><span></span><img src="hoa-trong-suot.png" alt="">
+</div>
+<div class="corner-sprig sprig-top-right" aria-hidden="true">
+<span></span><span></span><img src="hoa2-trong-suot.png" alt="">
+</div>
+<div class="corner-sprig sprig-bottom-left" aria-hidden="true">
+<span></span><span></span><img src="hoa1-trong-suot.png" alt="">
+</div>
+<div class="corner-sprig sprig-bottom-right" aria-hidden="true">
+<span></span><span></span><img src="hoa3-trong-suot.png" alt="">
+</div>
 
 <div class="container">
 
-<div class="name" id="name">💖 LÊ KIM HẠNH TIÊN 💖</div>
+<div class="name" id="name">🌸 Ngô Mỹ Uyên 🌸</div>
 
 <div class="photo">
 
-<img src="lekimhanhtien.jpg">
+<img src="myuyen.jpg" alt="Ngô Mỹ Uyên">
 
 <div class="orbit">
 <span>💖</span>
@@ -408,137 +438,121 @@ animation:flyLetter 2s forwards;
 
 </div>
 
-<div class="envelope" onclick="openLetter(this)">
+<button class="envelope" type="button" aria-label="Mở thư chúc mừng" aria-expanded="false" onclick="openLetter(this)">
 
 <div class="flap"></div>
 
-<div class="letter">
-Happy Women's Day! 🌸<br><br>
-Chúc nàng 'Tiên' không chỉ ngày 8/3 mà lúc nào cũng xinh đẹp, 'vạn người mê' và công việc luôn gặp nhìu thuận lợi.<br><br>
-Mong cậu luôn giữ được năng lượng tích cực để lúc nào cũm "she in shine" nhé.<br><br>
-From Zanhh with 💖
+<span class="envelope-hint" aria-hidden="true">Click me</span>
+
+<div class="letter" aria-hidden="true">
+<strong>Happy Vietnamese Women's Day! 🌸</strong><br><br>
+Chúc Uyên ngày 20/10 thật vui, luôn có 'vạn người mê' và gặp nhiều điều thuận lợi trong học tập, công việc cũng như những dự định sắp tới.<br><br>
+Mong Uyên luôn giữ được năng lượng tích cực để lúc nào cũm "she in shine" nhé.<br><br>
+<strong>Zanhh</strong>
 </div>
 
-</div>
+</button>
 
 </div>
-
-<audio autoplay loop>
-<source src="https://cdn.pixabay.com/audio/2022/03/15/audio_6c9d8e7d3a.mp3">
-</audio>
 
 <script>
 
-/* STARS */
+const stars=document.getElementById("stars")
+const photo=document.querySelector(".photo")
+const name=document.getElementById("name")
 
-for(let i=0;i<150;i++){
-let star=document.createElement("div")
+document.querySelectorAll(".corner-sprig img").forEach(image=>{
+image.addEventListener("load",()=>image.parentElement.classList.add("has-image"))
+image.addEventListener("error",()=>image.remove())
+})
+
+for(let index=0;index<150;index++){
+const star=document.createElement("i")
 star.className="star"
 star.style.left=Math.random()*100+"%"
 star.style.top=Math.random()*100+"%"
-document.getElementById("stars").appendChild(star)
+stars.appendChild(star)
 }
-
-/* SHOOTING STARS */
 
 setInterval(()=>{
-let s=document.createElement("div")
-s.className="shooting-star"
-s.style.left=Math.random()*100+"vw"
-document.body.appendChild(s)
-setTimeout(()=>{s.remove()},3000)
+const star=document.createElement("div")
+star.className="shooting-star"
+star.style.left=Math.random()*100+"vw"
+document.body.appendChild(star)
+setTimeout(()=>star.remove(),3000)
 },5000)
 
-/* SAKURA */
-
-for(let i=0;i<40;i++){
-let sakura=document.createElement("div")
-sakura.className="sakura"
-sakura.innerHTML="🌸"
-sakura.style.left=Math.random()*100+"vw"
-sakura.style.animationDuration=5+Math.random()*5+"s"
-document.body.appendChild(sakura)
+for(let index=0;index<40;index++){
+const petal=document.createElement("span")
+petal.className="falling-petal"
+petal.textContent="🌸"
+petal.style.left=Math.random()*100+"%"
+petal.style.animationDuration=5+Math.random()*5+"s"
+document.body.appendChild(petal)
 }
 
-/* HEART FLOAT */
-
 function heart(){
-let h=document.createElement("div")
-h.className="heart"
-h.innerHTML="💖"
-h.style.left=Math.random()*100+"vw"
-document.body.appendChild(h)
-setTimeout(()=>{h.remove()},5000)
+const element=document.createElement("div")
+element.className="floating-heart"
+element.textContent="💖"
+element.style.left=Math.random()*100+"vw"
+document.body.appendChild(element)
+setTimeout(()=>element.remove(),5000)
 }
 
 setInterval(heart,800)
 
-/* CLICK HEART */
-
-document.addEventListener("click",e=>{
-let h=document.createElement("div")
-h.className="heart"
-h.innerHTML="💖"
-h.style.left=e.clientX+"px"
-h.style.top=e.clientY+"px"
-document.body.appendChild(h)
-setTimeout(()=>{h.remove()},3000)
+document.addEventListener("click",event=>{
+const element=document.createElement("div")
+element.className="floating-heart"
+element.textContent="💖"
+element.style.left=event.clientX+"px"
+element.style.top=event.clientY+"px"
+document.body.appendChild(element)
+setTimeout(()=>element.remove(),3000)
 })
 
-/* SPARKLES */
-
-const photo=document.querySelector(".photo")
-
 setInterval(()=>{
-let sp=document.createElement("div")
-sp.className="sparkle"
-sp.innerHTML="✨"
-sp.style.left=Math.random()*100+"%"
-sp.style.top=Math.random()*100+"%"
-photo.appendChild(sp)
-
-setTimeout(()=>{sp.remove()},2000)
+const sparkle=document.createElement("div")
+sparkle.className="sparkle"
+sparkle.textContent="✨"
+sparkle.style.left=Math.random()*100+"%"
+sparkle.style.top=Math.random()*100+"%"
+photo.appendChild(sparkle)
+setTimeout(()=>sparkle.remove(),2000)
 },500)
 
-/* OPEN LETTER */
-
 function openLetter(el){
-
 el.classList.toggle("open")
+el.setAttribute("aria-expanded",el.classList.contains("open"))
+el.querySelector(".letter").setAttribute("aria-hidden",!el.classList.contains("open"))
 
-/* EXPLOSION */
+if(!el.classList.contains("open")) return
 
-for(let i=0;i<20;i++){
-let b=document.createElement("div")
-b.className="burst"
-b.innerHTML="✨"
-b.style.setProperty("--x",(Math.random()*200-100)+"px")
-b.style.setProperty("--y",(Math.random()*200-100)+"px")
-el.appendChild(b)
-setTimeout(()=>b.remove(),1000)
+for(let index=0;index<20;index++){
+const burst=document.createElement("div")
+burst.className="burst"
+burst.textContent="✨"
+burst.style.setProperty("--x",(Math.random()*200-100)+"px")
+burst.style.setProperty("--y",(Math.random()*200-100)+"px")
+el.appendChild(burst)
+setTimeout(()=>burst.remove(),1000)
 }
 
-/* FLYING LETTER */
-
-for(let i=0;i<8;i++){
-let f=document.createElement("div")
-f.className="flyLetter"
-f.innerHTML="💌"
-f.style.left=Math.random()*200+"px"
-el.appendChild(f)
-setTimeout(()=>f.remove(),2000)
+for(let index=0;index<8;index++){
+const letter=document.createElement("div")
+letter.className="fly-letter"
+letter.textContent="💌"
+letter.style.left=Math.random()*200+"px"
+el.appendChild(letter)
+setTimeout(()=>letter.remove(),2000)
 }
-
 }
-
-/* LIGHTS AROUND NAME */
-
-const name=document.getElementById("name")
 
 setInterval(()=>{
-let light=document.createElement("div")
+const light=document.createElement("div")
 light.className="name-light"
-light.innerHTML="✨"
+light.textContent="✨"
 light.style.left="50%"
 light.style.top="50%"
 name.appendChild(light)
